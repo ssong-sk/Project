@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,15 +36,12 @@ public class CafeMenu extends JFrame implements ActionListener {
 
 	private static final Component CafeMenu = null;
 	// 변수선언
-	Container cp, oFrame;
+	Container cp;
 	JButton btn1, btn2, btn3, btn4, btn5; // 상부, 하부 버튼
-	JButton btnAdd; // 결제하기 버튼 안에 최종 결제버튼
 	JPanel panel1, panel2, panel3; // 판넬 사이즈
-	JLabel lbl1, lbl2, lbl3; // 판넬2 중단내용, 하단 주문,결제라벨
 	JLabel lbl2_1, lbl2_2, lbl2_3, lbl3_1; // 판넬2 메뉴 3개 선택, 주문 총 금액, 결제취소
-	JLabel lblNum1, lblNum2, lblNum3; // 결제하기 버튼 누르면 나오는 라벨
-	JTextField tfNum1, tfNum2; // 총 금액 및 금액 입력하기
-	CardLayout cardLayout;
+	
+
 
 	int x = 0; // 판넬2 중단 판넬 위치 X
 	int y = 0; // 판넬2 중단 판넬 위치 Y
@@ -50,6 +49,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 	int num1 = 0; // 판넬2 중단 판넬 위치 X
 	int num2 = 0; // 판넬2 중단 판넬 위치 Y
 	int num3 = 0; // 판넬2 중단 판넬 위치 Y
+
 
 	// 상속 메서드 형성
 	public CafeMenu(String title) {
@@ -139,7 +139,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 		panel3.setLayout(null);
 
 		// 주문내역
-		lbl2 = new JLabel("주문내역", JLabel.CENTER);
+		JLabel lbl2 = new JLabel("주문내역", JLabel.CENTER);
 		lbl2.setFont(new FontUIResource("", Font.BOLD, 15));
 		lbl2.setBounds(20, 10, 100, 70);
 		lbl2.setBorder(new LineBorder(Color.black, 1));
@@ -149,21 +149,21 @@ public class CafeMenu extends JFrame implements ActionListener {
 		lbl2_1.setHorizontalAlignment(JLabel.RIGHT);
 		lbl2_1.setFont(new FontUIResource("", Font.BOLD, 11));
 		lbl2_1.setBounds(119, 10, 250, 23);
-		lbl2_1.setBorder(new LineBorder(Color.black, 1));
+		// lbl2_1.setBorder(new LineBorder(Color.black, 1));
 
 		// 음료
 		lbl2_2 = new JLabel();
 		lbl2_2.setHorizontalAlignment(JLabel.RIGHT);
 		lbl2_2.setFont(new FontUIResource("", Font.BOLD, 11));
 		lbl2_2.setBounds(119, 33, 250, 24);
-		lbl2_2.setBorder(new LineBorder(Color.black, 1));
+		// lbl2_2.setBorder(new LineBorder(Color.black, 1));
 
 		// 디저트
 		lbl2_3 = new JLabel();
 		lbl2_3.setHorizontalAlignment(JLabel.RIGHT);
 		lbl2_3.setFont(new FontUIResource("", Font.BOLD, 11));
 		lbl2_3.setBounds(119, 57, 250, 23);
-		lbl2_3.setBorder(new LineBorder(Color.black, 1));
+		// lbl2_3.setBorder(new LineBorder(Color.black, 1));
 
 		panel3.add(lbl2);
 		panel3.add(lbl2_1);
@@ -171,7 +171,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 		panel3.add(lbl2_3);
 
 		// 결제금액
-		lbl3 = new JLabel("총 결제금액", JLabel.CENTER);
+		JLabel lbl3 = new JLabel("총 결제금액", JLabel.CENTER);
 		lbl3.setFont(new FontUIResource("", Font.BOLD, 12));
 		lbl3.setBounds(20, 90, 100, 30);
 		lbl3.setBorder(new LineBorder(Color.black, 1));
@@ -181,7 +181,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 		lbl3_1.setHorizontalAlignment(JLabel.RIGHT);
 		lbl3_1.setFont(new FontUIResource("", Font.BOLD, 11));
 		lbl3_1.setBounds(120, 90, 250, 30);
-		lbl3_1.setBorder(new LineBorder(Color.black, 1));
+		// lbl3_1.setBorder(new LineBorder(Color.black, 1));
 
 		panel3.add(lbl3);
 		panel3.add(lbl3_1);
@@ -196,17 +196,18 @@ public class CafeMenu extends JFrame implements ActionListener {
 			lbl1.setBounds(x, y, 110, 145);
 			lbl1.setOpaque(true);
 
+			// 아이콘 삽입
 			ImageIcon icon = new ImageIcon(rs.getString("IMAGE_PATH"));
 			Image image = icon.getImage();
-			Image scaledImage = image.getScaledInstance(110, 100, Image.SCALE_SMOOTH);
-			ImageIcon scaledIcon = new ImageIcon(scaledImage);
+			Image scaledImage = image.getScaledInstance(110, 100, Image.SCALE_SMOOTH); // 크기지정
+			ImageIcon scaledIcon = new ImageIcon(scaledImage); // 스케일 조정
 
 			JLabel jl1 = new JLabel();
 			jl1.setIcon(scaledIcon); // 크기가 조정된 아이콘 설정
 			lbl1.add(jl1);
 
 			JLabel jl2 = new JLabel(rs.getString("C_NAME"), JLabel.CENTER);
-			jl2.setPreferredSize(new Dimension(110, 10)); // 라벨 영역 크기 설정
+			jl2.setPreferredSize(new Dimension(110, 10)); // 라벨 영역 크기 설정(조정)
 			lbl1.add(jl2);
 
 			JLabel jl3 = new JLabel(rs.getString("C_PRICE") + "(원)", JLabel.CENTER);
@@ -232,6 +233,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 
+					// 주문내역에 각 3개에 대한 이벤트 추가
 					if ("COFFEE".equals(menu)) {
 						num1 = cPrice;
 						lbl2_1.setText("    " + cName + "   " + cPrice + " 원");
@@ -243,6 +245,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 						lbl2_3.setText("    " + cName + "   " + cPrice + " 원");
 					}
 
+					// 총 결제금액에 대한 이벤트
 					int sum = num1 + num2 + num3;
 					lbl3_1.setText("" + sum + "원");
 
@@ -252,7 +255,7 @@ public class CafeMenu extends JFrame implements ActionListener {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} // db조회하는 곳에서 finally 를 썼기 때문에 생략가능..... finally 에러가 나도 무조건 실행!
 	}
 
 	// 4. centerDesign에 db불러온 데이터를 넣어서 저장 (기존 배웠던 커넥트사원 불러와서 작업 / 현 데이터에 맞게 변수와 값만
@@ -309,83 +312,65 @@ public class CafeMenu extends JFrame implements ActionListener {
 
 		// 커피 음료 디저트 버튼에 액션주기
 		if (ob == btn1 || ob == btn2 || ob == btn3) {
+			// 첫번째 이미지가 오게 하기 위해서 초기화를 해줌.
 			x = 0;
 			y = 0;
-			this.remove(panel2);
+			this.remove(panel2); // 각 버튼 누르면 panel2 지워지며 리셋됨.
 			panel2 = new JPanel();
 			panel2.setBounds(20, 70, 350, 300);
 			this.add(panel2);
 
 			if (ob == btn1) {
 				connectShop("COFFEE");
-				panel2.revalidate(); // 컨테이너를 다시 그립니다.
-				panel2.repaint(); // 컨테이너를 다시 그립니다.
+
 			} else if (ob == btn2) {
 				connectShop("DRINGK");
-				panel2.revalidate(); // 컨테이너를 다시 그립니다.
-				panel2.repaint(); // 컨테이너를 다시 그립니다.
+
 			} else if (ob == btn3) {
 				connectShop("DESSERT");
-				panel2.revalidate(); // 컨테이너를 다시 그립니다.
-				panel2.repaint(); // 컨테이너를 다시 그립니다.
 			}
-		}
-
-		if (ob == lbl1) {
-			connectShop(getName());
+			panel2.revalidate(); // 컨테이너를 다시 그립니다.
+			panel2.repaint(); // 컨테이너를 다시 그립니다.
 		}
 
 		// 결제취소버튼
 		if (ob == btn4) {
-			num1 = 0; // 커피값 초기화
-			num2 = 0; // 음료값 초기화
-			num3 = 0; // 디저트값 초기화
-
-			lbl2_1.setText("");// 커피값 표기 초기화
-			lbl2_2.setText("");// 음료값 표기 초기화
-			lbl2_3.setText("");// 디저트값 표기 초기화
-			lbl3_1.setText("");// 총값 표기 초기화
+			reset(); // 초기화
 		}
-
+		// 결제하기 창.....
 		if (ob == btn5) {
 
+			if (num1 + num2 + num3 == 0) {
+				Component component = this;
+				JOptionPane.showMessageDialog(component, "결제금액이 없습니다.", "결제 오류", JOptionPane.ERROR_MESSAGE);
+				return; // 소스멈춤...
+			}
+
 			// 결제하기 버튼 누르면 나오는 프레임 만들기
-			JFrame oFrame = new JFrame("결제창");
-			oFrame.setBounds(400, 20, 230, 200);
-			oFrame.setBackground(new Color(255, 255, 255));
+		    JFrame oFrame = new JFrame("결제창");
+			oFrame.setBounds(800, 20, 400, 600);
+			// jframe 이미지넣기
+			ImageIcon imageIcon1 = new ImageIcon("C:\\Users\\승경\\OneDrive\\바탕 화면\\수업자료\\starbucksimage\\스타벅스로고-02.png");
+			JLabel imageLabel1 = new JLabel(imageIcon1);
+			oFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			oFrame.setContentPane(imageLabel1);
+			// oFrame.getContentPane().setLayout(new FlowLayout());
 
 			// 총 금액
+			int sum = num1 + num2 + num3;
+
 			oFrame.setLayout(null);
-			lblNum1 = new JLabel("총 금액");
-			lblNum1.setBounds(20, 10, 50, 30);
+			JLabel lblNum1 = new JLabel("총 금액 :   " + sum, JLabel.CENTER);
+			lblNum1.setFont(new Font("", Font.BOLD, 15)); // 폰트
+			lblNum1.setForeground(new Color(000, 100, 000)); // 글자 컬러
+			lblNum1.setBounds(105, 350, 200, 40); // 크기
+			// lblNum1.setBackground(new Color(051, 102, 255)); //백그라운드 컬러
+			// lblNum1.setOpaque(true); // 배경을 투명하게 설정
 			oFrame.add(lblNum1);
 
-			lblNum3 = new JLabel("sum");
-			lblNum3.setBounds(100, 10, 100, 30);
-			// int sum = num1 + num2 + num3;
-			// lbl3_1.setText("" + sum + "원");
-			oFrame.add(lblNum3);
-			// oFrame.add(lbl3_1);
-
-//			tfNum1 = new JTextField();
-//			tfNum1.setBounds(100, 10, 100, 30);
-//			oFrame.add(tfNum1);
-
-			// 낼 돈 입력
-			oFrame.setLayout(null);
-			lblNum2 = new JLabel("금액 입력");
-			lblNum2.setBounds(20, 50, 80, 30);
-			oFrame.add(lblNum2);
-
-			// centerDesign(null); //sum있는 총합의 메서드 가져옴....
-
-			tfNum2 = new JTextField();
-			tfNum2.setBounds(100, 50, 100, 30);
-			oFrame.add(tfNum2);
-
 			// 결제하기 버튼
-			btnAdd = new JButton("결제하기");
-			btnAdd.setBounds(20, 110, 180, 40);
+			JButton btnAdd = new JButton("현금 결제하기");
+			btnAdd.setBounds(100, 400, 200, 40);
 			btnAdd.setBackground(Color.white);
 			// btnAdd.addActionListener(this);
 			oFrame.add(btnAdd);
@@ -393,30 +378,71 @@ public class CafeMenu extends JFrame implements ActionListener {
 			btnAdd.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(CafeMenu.this, "결제가 완료되었습니다.");
-					cardLayout.show(CafeMenu.this.getContentPane(), "갱스타벅스 키오스크");
+
+					Component parentComponent = oFrame; // 메세지 창을 띄어주는 공간지정!!!!!
+					// 가상의 결제금액
+					int paymentAmount = sum;
+					int amount = 0;
+
+					// 사용자로부터 입력받은 결제금액
+					String inputAmount = JOptionPane.showInputDialog(parentComponent, "결제금액을 입력하세요:", "스타벅스 결제 완료 창",
+							JOptionPane.PLAIN_MESSAGE);
+
+					// 취소버튼 아닐 때에 대해 if문을 지정!!!! 금액이 nul1이 아니라면 입력된 금액 값이 있는지 확인
+					if (inputAmount != null) {
+						if (inputAmount.trim().length() == 0) { // 공간 길이 확인 (입력된 값이 있는지 체크하기 위해서)
+							JOptionPane.showMessageDialog(parentComponent, "금액을 입력 해주세요.", "결제 완료",
+									JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
+						amount = Integer.parseInt(inputAmount); // string에서 타입 변환해주기 (int값을 입력해야하므로)
+						// 결제금액이 맞는지 확인하여 boolean 값으로 반환
+						boolean isPaymentCorrect = (amount >= paymentAmount); // 금액 비교해서 true, false
+
+						// 입력한 금액이 같거나 크면 결제완료 만들기...
+						if (isPaymentCorrect) {
+
+							int changeAmount = amount - paymentAmount;
+							String message = "결제가 완료되었습니다. \n거스름돈: " + changeAmount;
+							JOptionPane.showMessageDialog(parentComponent, message, "결제 완료",
+									JOptionPane.INFORMATION_MESSAGE);
+							// 결제 하기 창 닫기
+							oFrame.dispose();
+							reset(); // 다시 초기화면으로 이동
+							// 입력한 금액이 적으면 다시 결제
+						} else {
+							JOptionPane.showMessageDialog(parentComponent, "결제금액이 올바르지 않습니다.", "결제 오류",
+									JOptionPane.ERROR_MESSAGE);
+							return; // 실행할 실행문이 없기 때문에 중지
+						}
+
+					}
 				}
 			});
 
 			oFrame.setVisible(true);
-
 		}
 
-//		if (ob == btnAdd) {
-//			cardLayout = new CardLayout();
-//			setLayout(cardLayout);
-//			add(CafeMenu, "main");
-//	        add(paymentPanel, "payment");
-//
-//			JOptionPane.showMessageDialog(CafeMenu.this, "결제가 완료되었습니다.");
-//			cardLayout.show(CafeMenu.this.getContentPane(), "main");
-//		}
+	}
+
+	//
+	public void reset() {
+		num1 = 0; // 커피값 초기화
+		num2 = 0; // 음료값 초기화
+		num3 = 0; // 디저트값 초기화
+
+		lbl2_1.setText("");// 커피값 표기 초기화
+		lbl2_2.setText("");// 음료값 표기 초기화
+		lbl2_3.setText("");// 디저트값 표기 초기화
+		lbl3_1.setText("");// 총값 표기 초기화
+		connectShop("COFFEE");
+
 
 	}
 
 	public static void main(String[] args) {
 
-		new CafeMenu("갱스타벅스 키오스크");
+		new CafeMenu("★스타벅스 키오스크★");
 
 	}
 
